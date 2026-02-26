@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<!-- Meta tags -->
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Bootstrap CSS -->
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+		/>
+
+		<!-- Custom CSS -->
+		<link rel="stylesheet" href="css/style.css" />
+	</head>
+	<body>
+		<!-- Navigation Bar Component -->
+		<div id="navbar-component"></div>
+
+		<!-- Main Content Component -->
+		<div id="content-component"></div>
+
+		<!-- Bootstrap JS Bundle -->
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+		<!-- Custom JS -->
+		<script src="js/script.js"></script>
+
+		<!-- Component Loader Script -->
+		<script>
+			// Simple HTML include for components
+			function includeHTML(id, url) {
+				fetch(url)
+					.then((response) => response.text())
+					.then((data) => {
+						const el = document.getElementById(id);
+						if (el) el.innerHTML = data;
+					});
+			}
+
+			// Inject head component (title & favicon) into <head>
+			fetch("components/head.html")
+				.then((response) => response.text())
+				.then((data) => {
+					document.head.insertAdjacentHTML("beforeend", data);
+				});
+
+			// Load navbar and content components
+			includeHTML("navbar-component", "components/navbar.html");
+			includeHTML("content-component", "components/content.html");
+		</script>
+	</body>
+</html>
