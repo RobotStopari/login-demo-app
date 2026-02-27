@@ -31,6 +31,7 @@ function setupAuthUI() {
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
             <li><a class="dropdown-item" href="#" id="changePasswordBtn">Change password</a></li>
+            <li><a class="dropdown-item" href="#" id="editInfoBtn">Edit profile</a></li>
           </ul>
         </div>
       `;
@@ -38,6 +39,24 @@ function setupAuthUI() {
 			document.getElementById("logoutBtn").onclick = logoutUser;
 			document.getElementById("changePasswordBtn").onclick = () => {
 				new bootstrap.Modal(document.getElementById("changePasswordModal")).show();
+			};
+			document.getElementById("editInfoBtn").onclick = async () => {
+				const user = auth.currentUser;
+				if (user) {
+					try {
+						const doc = await db.collection("users").doc(user.uid).get();
+						if (doc.exists) {
+							const data = doc.data();
+							const nameEl = document.getElementById("updateName");
+							const nickEl = document.getElementById("updateNickname");
+							if (nameEl) nameEl.value = data.Name || "";
+							if (nickEl) nickEl.value = data.Nickname || "";
+						}
+					} catch (e) {
+						// ignore
+					}
+				}
+				new bootstrap.Modal(document.getElementById("updateInfoModal")).show();
 			};
 		} else {
 			// Show login/register buttons

@@ -14,4 +14,17 @@ if (typeof window !== "undefined") {
 			}
 		}
 	});
+
+	function clearLoginModal() {
+		const form = document.getElementById("loginForm");
+		if (form) form.reset();
+		const errorDiv = document.getElementById("loginError");
+		if (errorDiv) errorDiv.textContent = "";
+	}
+
+	const loginModalEl = document.getElementById("loginModal");
+	if (loginModalEl) {
+		loginModalEl.addEventListener("hidden.bs.modal", clearLoginModal);
+		loginModalEl.addEventListener("hide.bs.modal", clearLoginModal);
+	}
 }

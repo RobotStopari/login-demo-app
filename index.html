@@ -29,7 +29,9 @@
 			[
 				"components/modals/register.html",
 				"components/modals/login.html",
+				"components/modals/forgot-password.html",
 				"components/modals/change-password.html",
+				"components/modals/update-info.html",
 			].forEach((path) => {
 				fetch(path)
 					.then((res) => res.text())
@@ -44,6 +46,7 @@
 		<script src="js/auth/logout.js"></script>
 		<script src="js/auth/changePassword.js"></script>
 		<script src="js/auth/forgotPassword.js"></script>
+		<script src="js/auth/updateInfo.js"></script>
 
 		<!-- Custom JS -->
 		<script src="js/script.js"></script>

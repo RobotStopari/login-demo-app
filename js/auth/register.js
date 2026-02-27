@@ -8,6 +8,10 @@ if (typeof window !== "undefined") {
 			const password = document.getElementById("registerPassword").value;
 			const errorDiv = document.getElementById("registerError");
 			errorDiv.textContent = "";
+			if (!name) {
+				errorDiv.textContent = "Name is required.";
+				return;
+			}
 			try {
 				const cred = await auth.createUserWithEmailAndPassword(email, password);
 				await db
@@ -22,4 +26,17 @@ if (typeof window !== "undefined") {
 			}
 		}
 	});
+
+	function clearRegisterModal() {
+		const form = document.getElementById("registerForm");
+		if (form) form.reset();
+		const errorDiv = document.getElementById("registerError");
+		if (errorDiv) errorDiv.textContent = "";
+	}
+
+	const registerModalEl = document.getElementById("registerModal");
+	if (registerModalEl) {
+		registerModalEl.addEventListener("hidden.bs.modal", clearRegisterModal);
+		registerModalEl.addEventListener("hide.bs.modal", clearRegisterModal);
+	}
 }
