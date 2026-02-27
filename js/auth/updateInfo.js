@@ -50,7 +50,7 @@ if (typeof window !== "undefined") {
 						bootstrap.Modal.getInstance(
 							document.getElementById("updateInfoModal"),
 						).hide();
-					}, 1200);
+					}, 1000);
 				} catch (err) {
 					errorDiv.textContent = err.message;
 				}

@@ -24,17 +24,24 @@ function setupAuthUI() {
 			} catch (e) {}
 			let displayName = nickname || name.split(" ")[0] || user.email;
 			const dropdownHTML = `
-        <div class="dropdown" id="userDropdownContainer">
-          <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-            ${displayName}
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-            <li><a class="dropdown-item" href="#" id="logoutBtn">Logout</a></li>
-            <li><a class="dropdown-item" href="#" id="changePasswordBtn">Change password</a></li>
-            <li><a class="dropdown-item" href="#" id="editInfoBtn">Edit profile</a></li>
-          </ul>
-        </div>
-      `;
+				<li class="nav-item dropdown" id="userDropdownContainer">
+					<a
+						class="nav-link dropdown-toggle"
+						href="#"
+						id="userDropdown"
+						role="button"
+						data-bs-toggle="dropdown"
+						aria-expanded="false"
+					>
+						${displayName}
+					</a>
+					<ul class="dropdown-menu dropdown-menu-end dropdown-animate" aria-labelledby="userDropdown">
+						<li><a class="dropdown-item text-end" href="#" id="logoutBtn">Logout</a></li>
+						<li><a class="dropdown-item text-end" href="#" id="changePasswordBtn">Change password</a></li>
+						<li><a class="dropdown-item text-end" href="#" id="editInfoBtn">Edit profile</a></li>
+					</ul>
+				</li>
+			`;
 			authArea.insertAdjacentHTML("beforeend", dropdownHTML);
 			document.getElementById("logoutBtn").onclick = logoutUser;
 			document.getElementById("changePasswordBtn").onclick = () => {
