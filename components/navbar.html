@@ -1,49 +1,25 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 	<div class="container-fluid">
 		<a class="navbar-brand" href="#">Demo Login App</a>
-		<button
-			class="navbar-toggler"
-			type="button"
-			data-bs-toggle="collapse"
-			data-bs-target="#navbarNav"
-			aria-controls="navbarNav"
-			aria-expanded="false"
-			aria-label="Toggle navigation"
-		>
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse text-end mt-2" id="navbarNav">
-			<ul class="navbar-nav ms-auto w-100 justify-content-end">
-				<li class="nav-item">
-					<a class="nav-link active" aria-current="page" href="#">Home</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#">Page</a>
-				</li>
-				<li class="nav-item dropdown">
-					<a
-						class="nav-link dropdown-toggle"
-						href="#"
-						id="navbarDropdown"
-						role="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
-						Dropdown
-					</a>
-					<ul
-						class="dropdown-menu dropdown-menu-end dropdown-animate"
-						aria-labelledby="navbarDropdown"
-					>
-						<li><a class="dropdown-item text-end" href="#">Action</a></li>
-						<li><a class="dropdown-item text-end" href="#">Another action</a></li>
-						<li><hr class="dropdown-divider" /></li>
-						<li>
-							<a class="dropdown-item text-end" href="#">Something else here</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
+		<div class="d-flex ms-auto" id="auth-navbar-area">
+			<button class="btn btn-outline-primary me-2" id="showRegisterBtn">
+				Register
+			</button>
+			<button class="btn btn-primary" id="showLoginBtn">Login</button>
+			<!-- User dropdown will be injected here by JS when logged in -->
 		</div>
 	</div>
 </nav>
+
+<script>
+	// Load modal components
+	[
+		"components/modals/register.html",
+		"components/modals/login.html",
+		"components/modals/change-password.html",
+	].forEach((path) => {
+		fetch(path)
+			.then((res) => res.text())
+			.then((html) => document.body.insertAdjacentHTML("beforeend", html));
+	});
+</script>
