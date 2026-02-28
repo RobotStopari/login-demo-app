@@ -19,16 +19,6 @@
 			<div class="modal-body">
 				<form id="registerForm">
 					<div class="mb-3">
-						<label for="registerName" class="form-label">Name</label>
-						<input type="text" class="form-control" id="registerName" required />
-					</div>
-					<div class="mb-3">
-						<label for="registerNickname" class="form-label"
-							>Nickname (optional)</label
-						>
-						<input type="text" class="form-control" id="registerNickname" />
-					</div>
-					<div class="mb-3">
 						<label for="registerEmail" class="form-label">Email address</label>
 						<input type="email" class="form-control" id="registerEmail" required />
 					</div>
@@ -41,6 +31,7 @@
 							required
 						/>
 					</div>
+					<div id="registerExtraFields"></div>
 					<button type="submit" class="btn btn-primary w-100">Register</button>
 				</form>
 				<div class="mt-2 text-danger" id="registerError"></div>
