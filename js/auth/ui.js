@@ -23,48 +23,43 @@ function setupAuthUI() {
 				}
 			} catch (e) {}
 			let displayName = nickname || name.split(" ")[0] || user.email;
-			const dropdownHTML = `
-				<li class="nav-item dropdown" id="userDropdownContainer">
-					<a
-						class="nav-link dropdown-toggle"
-						href="#"
-						id="userDropdown"
-						role="button"
-						data-bs-toggle="dropdown"
-						aria-expanded="false"
-					>
-						${displayName}
-					</a>
-					<ul class="dropdown-menu dropdown-menu-end dropdown-animate" aria-labelledby="userDropdown">
-						<li><a class="dropdown-item text-end" href="#" id="logoutBtn">Logout</a></li>
-						<li><a class="dropdown-item text-end" href="#" id="changePasswordBtn">Change password</a></li>
-						<li><a class="dropdown-item text-end" href="#" id="editInfoBtn">Edit profile</a></li>
-					</ul>
-				</li>
-			`;
-			authArea.insertAdjacentHTML("beforeend", dropdownHTML);
-			document.getElementById("logoutBtn").onclick = logoutUser;
-			document.getElementById("changePasswordBtn").onclick = () => {
-				new bootstrap.Modal(document.getElementById("changePasswordModal")).show();
-			};
-			document.getElementById("editInfoBtn").onclick = async () => {
-				const user = auth.currentUser;
-				if (user) {
-					try {
-						const doc = await db.collection("users").doc(user.uid).get();
-						if (doc.exists) {
-							const data = doc.data();
-							const nameEl = document.getElementById("updateName");
-							const nickEl = document.getElementById("updateNickname");
-							if (nameEl) nameEl.value = data.Name || "";
-							if (nickEl) nickEl.value = data.Nickname || "";
+			// Fetch dropdown HTML from external file and insert
+			fetch("components/user-nav-dropdown.html")
+				.then((response) => response.text())
+				.then((dropdownHTML) => {
+					authArea.insertAdjacentHTML("beforeend", dropdownHTML);
+					// Set displayName in the dropdown
+					const displayNameSpan = document.getElementById("userDropdownDisplayName");
+					if (displayNameSpan) displayNameSpan.textContent = displayName;
+					// Attach event handlers
+					document.getElementById("logoutBtn").onclick = logoutUser;
+					document.getElementById("changePasswordBtn").onclick = () => {
+						new bootstrap.Modal(
+							document.getElementById("changePasswordModal"),
+						).show();
+					};
+					document.getElementById("editInfoBtn").onclick = async () => {
+						const user = auth.currentUser;
+						if (user) {
+							try {
+								const doc = await db.collection("users").doc(user.uid).get();
+								if (doc.exists) {
+									const data = doc.data();
+									const nameEl = document.getElementById("updateName");
+									const nickEl = document.getElementById("updateNickname");
+									if (nameEl) nameEl.value = data.Name || "";
+									if (nickEl) nickEl.value = data.Nickname || "";
+								}
+							} catch (e) {
+								// ignore
+							}
 						}
-					} catch (e) {
-						// ignore
-					}
-				}
-				new bootstrap.Modal(document.getElementById("updateInfoModal")).show();
-			};
+						new bootstrap.Modal(document.getElementById("updateInfoModal")).show();
+					};
+				})
+				.catch((e) => {
+					console.error("Failed to load user dropdown HTML", e);
+				});
 		} else {
 			// Show login/register buttons
 			if (registerBtn) registerBtn.style.display = "";

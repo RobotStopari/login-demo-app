@@ -40,9 +40,25 @@ if (typeof window !== "undefined") {
 		if (successDiv) successDiv.textContent = "";
 	}
 
-	const changeModalEl = document.getElementById("changePasswordModal");
-	if (changeModalEl) {
-		changeModalEl.addEventListener("hidden.bs.modal", clearChangeModal);
-		changeModalEl.addEventListener("hide.bs.modal", clearChangeModal);
+	function attachChangeModalListeners() {
+		const changeModalEl = document.getElementById("changePasswordModal");
+		if (changeModalEl) {
+			changeModalEl.addEventListener("hidden.bs.modal", clearChangeModal);
+			changeModalEl.addEventListener("hide.bs.modal", clearChangeModal);
+			return true;
+		}
+		return false;
+	}
+
+	// Try to attach listeners immediately; if modal isn't present yet, poll until it is.
+	if (!attachChangeModalListeners()) {
+		let attempts = 0;
+		const maxAttempts = 50; // ~5s
+		const waiter = setInterval(() => {
+			attempts++;
+			if (attachChangeModalListeners() || attempts >= maxAttempts) {
+				clearInterval(waiter);
+			}
+		}, 100);
 	}
 }
